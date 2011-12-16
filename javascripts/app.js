@@ -5,8 +5,11 @@
     log = function(msg) {
       return $('#log').prepend("<li>" + msg + "</li>");
     };
-    return nav.bind('touchstart touchend touchcancel touchleave touchmove', function(e) {
-      return log(e.type);
+    nav.bind('touchstart', function(e) {
+      return $(this).addClass('touched');
+    });
+    return nav.bind('touchend touchcancel touchleave', function(e) {
+      return $(this).removeClass('touched');
     });
   });
 }).call(this);

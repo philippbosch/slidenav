@@ -38,12 +38,16 @@ a {
     text-decoration: none;
 }
 
-nav {
+#slidenav {
     background: #111;
     padding: 16px 8px;
     font-size: 18px;
     text-align: center;
     overflow: hidden;
+    
+    &.touched {
+        background: #191919;
+    }
     
     ul {
         @include inline-block-list($padding: 10px);

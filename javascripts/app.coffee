@@ -4,5 +4,8 @@ $ ->
     log = (msg) ->
         $('#log').prepend("<li>#{msg}</li>")
     
-    nav.bind 'touchstart touchend touchcancel touchleave touchmove', (e) ->
-        log e.type
+    nav.bind 'touchstart', (e) ->
+        $(this).addClass 'touched'
+    
+    nav.bind 'touchend touchcancel touchleave', (e) ->
+        $(this).removeClass 'touched'
