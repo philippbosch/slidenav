@@ -18,17 +18,28 @@
     </head>
     
     <body>
-        <div id="main" role="main">
-            <h1>{{ app_title }}</h1>
-        </div>
+        <nav id="slidenav">
+            <ul>
+                <li><a href="#01">Eins</a></li>
+                <li><a href="#02">Zwei</a></li>
+                <li><a href="#03">Drei</a></li>
+                <li><a href="#04">Vier</a></li>
+                <li><a href="#05">Fünf</a></li>
+                <li><a href="#06">Sechs</a></li>
+                <li><a href="#07">Sieben</a></li>
+                <li><a href="#08">Acht</a></li>
+                <li><a href="#09">Neun</a></li>
+                <li><a href="#10">Zehn</a></li>
+            </ul>
+        </nav>
+        
+        <section id="content">
+            <ul id="log"></ul>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+        </section>
         
         {% if debug %}<a href="#" onclick="location.reload(); return false;" id="reloader">reload</a>{% endif %}
         <script src="javascripts/lib/zepto.min.js"></script>
-        <script src="javascripts/lib/add2home.min.js"></script>
         <script src="javascripts/app.js"></script>
-        {% if debug %}
-        <!--<script src="http://debug.phonegap.com/target/target-script-min.js#{{ app_name }}"></script>-->
-        <!-- Remote Web Inspector is at http://debug.phonegap.com/client/#{{ app_name }} -->
-        {% endif %}
     </body>
 </html>
