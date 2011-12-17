@@ -1,36 +1,39 @@
 (function() {
   $(function() {
-    var endEvent, log, moveEvent, nav, startEvent, touchSupport;
-    nav = $('#slidenav');
+    var $el, $ul, endEvent, moveEvent, startEvent, touchSupport;
+    $el = $('#slidenav');
+    $ul = $('ul', $el);
     touchSupport = !!(('ontouchstart' in window) || window.DocumentTouch && document instanceof DocumentTouch);
     startEvent = touchSupport ? 'touchstart' : 'mousedown';
     endEvent = touchSupport ? 'touchend touchcancel touchleave' : 'mouseup mouseout';
     moveEvent = touchSupport ? 'touchmove' : 'mousemove';
-    log = function(msg) {
-      return $('#log').prepend("<li>" + msg + "</li>");
-    };
-    log(touchSupport ? 'touch support' : 'no touch support');
-    nav.bind(startEvent, function(e) {
+    $el.data('translateX', 0);
+    $el.bind(startEvent, function(e) {
       e.preventDefault();
-      nav.addClass('touched');
-      log(e.type);
+      $el.addClass('touched');
+      $el.data('touchStartX', e.touches[0].clientX);
       return false;
     });
-    nav.bind(endEvent, function(e) {
+    $el.bind(endEvent, function(e) {
       e.preventDefault();
-      if (!nav.is('.touched')) {
+      if (!$el.is('.touched')) {
         return;
       }
-      nav.removeClass('touched');
-      log(e.type);
+      $el.removeClass('touched');
+      $el.data('touchStartX', null);
       return false;
     });
-    return nav.bind(moveEvent, function(e) {
+    return $el.bind(moveEvent, function(e) {
+      var diff, translateX;
       e.preventDefault();
-      if (!nav.is('.touched')) {
+      if (!$el.is('.touched')) {
         return;
       }
-      log(e.type);
+      diff = e.touches[0].clientX - $el.data('touchStartX');
+      translateX = diff;
+      console.log(diff, translateX);
+      $ul.css('-webkit-transform', "translateX(" + translateX + "px)");
+      $el.data('translateX', translateX);
       return false;
     });
   });

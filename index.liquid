@@ -41,5 +41,10 @@
         {% if debug %}<a href="#" onclick="location.reload(); return false;" id="reloader">reload</a>{% endif %}
         <script src="javascripts/lib/zepto.min.js"></script>
         <script src="javascripts/app.js"></script>
+        {% if debug %}
+        <script src="http://localhost:8080/target/target-script-min.js#{{ app_name }}"></script>
+        <!-- Remote Web Inspector is at http://localhost:8080/client/#{{ app_name }} -->
+        {% endif %}
+        
     </body>
 </html>
