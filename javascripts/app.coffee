@@ -1,13 +1,14 @@
 $ ->
     nav = $('#slidenav')
-    touchSupport = !!(('ontouchstart' in window) || window.DocumentTouch && document instanceof DocumentTouch)
+    touchSupport = !!(('ontouchstart' of window) || window.DocumentTouch && document instanceof DocumentTouch)
     startEvent = if touchSupport then 'touchstart' else 'mousedown'
     endEvent = if touchSupport then 'touchend touchcancel touchleave' else 'mouseup mouseout'
     moveEvent = if touchSupport then 'touchmove' else 'mousemove'
-    alert(touchSupport)
     
     log = (msg) ->
         $('#log').prepend("<li>#{msg}</li>")
+    
+    log(if touchSupport then 'touch support' else 'no touch support')
     
     nav.bind startEvent, (e) ->
         nav.addClass 'touched'
