@@ -13,12 +13,15 @@ $ ->
     nav.bind startEvent, (e) ->
         nav.addClass 'touched'
         log e.type
+        return false
     
     nav.bind endEvent, (e) ->
         return unless nav.is('.touched')
         nav.removeClass 'touched'
         log e.type
+        return false
     
     nav.bind moveEvent, (e) ->
         return unless nav.is('.touched')
         log e.type
+        return false

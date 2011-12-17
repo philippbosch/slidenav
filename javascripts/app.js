@@ -12,20 +12,23 @@
     log(touchSupport ? 'touch support' : 'no touch support');
     nav.bind(startEvent, function(e) {
       nav.addClass('touched');
-      return log(e.type);
+      log(e.type);
+      return false;
     });
     nav.bind(endEvent, function(e) {
       if (!nav.is('.touched')) {
         return;
       }
       nav.removeClass('touched');
-      return log(e.type);
+      log(e.type);
+      return false;
     });
     return nav.bind(moveEvent, function(e) {
       if (!nav.is('.touched')) {
         return;
       }
-      return log(e.type);
+      log(e.type);
+      return false;
     });
   });
 }).call(this);
