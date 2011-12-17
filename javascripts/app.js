@@ -1,8 +1,10 @@
 (function() {
   $(function() {
-    var $el, $ul, endEvent, moveEvent, startEvent, touchSupport;
+    var $el, $ul, endEvent, innerWidth, maxTranslateX, moveEvent, startEvent, touchSupport;
     $el = $('#slidenav');
     $ul = $('ul', $el);
+    innerWidth = $el.width() - parseInt($el.css('padding-left'), 10) - parseInt($el.css('padding-right'), 10);
+    maxTranslateX = $ul.width() - innerWidth;
     touchSupport = !!(('ontouchstart' in window) || window.DocumentTouch && document instanceof DocumentTouch);
     startEvent = touchSupport ? 'touchstart' : 'mousedown';
     endEvent = touchSupport ? 'touchend touchcancel touchleave' : 'mouseup mouseout';
@@ -25,14 +27,18 @@
       return false;
     });
     return $el.bind(moveEvent, function(e) {
-      var diff, translateX;
+      var translateX;
       e.preventDefault();
       if (!$el.is('.touched')) {
         return;
       }
-      diff = e.touches[0].clientX - $el.data('touchStartX');
-      translateX = diff;
-      console.log(diff, translateX);
+      translateX = e.touches[0].clientX - $el.data('touchStartX');
+      if (translateX > 0) {
+        translateX = 0;
+      }
+      if (translateX < -maxTranslateX) {
+        translateX = -maxTranslateX;
+      }
       $ul.css('-webkit-transform', "translateX(" + translateX + "px)");
       $el.data('currentTranslateX', translateX);
       return false;
