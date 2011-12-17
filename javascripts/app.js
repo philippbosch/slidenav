@@ -11,9 +11,11 @@
     moveEvent = touchSupport ? 'touchmove' : 'mousemove';
     $el.data('translateX', 0);
     $el.bind(startEvent, function(e) {
+      var clientX;
       e.preventDefault();
       $el.addClass('touched');
-      $el.data('touchStartX', e.touches[0].clientX - parseInt($el.data('translateX'), 10));
+      clientX = e.type === 'touchmove' ? e.touches[0].clientX : e.clientX;
+      $el.data('touchStartX', clientX - parseInt($el.data('translateX'), 10));
       return false;
     });
     $el.bind(endEvent, function(e) {
@@ -27,12 +29,13 @@
       return false;
     });
     return $el.bind(moveEvent, function(e) {
-      var translateX;
+      var clientX, translateX;
       e.preventDefault();
       if (!$el.is('.touched')) {
         return;
       }
-      translateX = e.touches[0].clientX - $el.data('touchStartX');
+      clientX = e.type === 'touchmove' ? e.touches[0].clientX : e.clientX;
+      translateX = clientX - $el.data('touchStartX');
       if (translateX > 0) {
         translateX = 0;
       }
