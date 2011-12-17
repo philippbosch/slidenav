@@ -1,3 +1,6 @@
+$.fn.intdata = (key) ->
+    parseInt($(this).data(key),10)
+
 $ ->
     $el = $('#slidenav')
     $ul = $('ul', $el)
@@ -8,32 +11,33 @@ $ ->
     endEvent = if touchSupport then 'touchend touchcancel touchleave' else 'mouseup mouseout'
     moveEvent = if touchSupport then 'touchmove' else 'mousemove'
     
-    $el.data 'translateX', 0
+    $el.data('translateX', 0)
+    $el.data('touchStartX', 0)
     
     $el.bind startEvent, (e) ->
         e.preventDefault()
         $el.addClass('touched')
-        clientX = if e.type == 'touchmove' then e.touches[0].clientX else e.clientX
-        $el.data('touchStartX', clientX - parseInt($el.data('translateX'),10))
+        clientX = if touchSupport then e.touches[0].clientX else e.clientX
+        $el.data('touchStartX', clientX - $el.intdata('translateX'))
         return false
     
     $el.bind endEvent, (e) ->
         e.preventDefault()
         return unless $el.is('.touched')
         $el.removeClass('touched')
-        $el.data('touchStartX', null)
-        $el.data('translateX', $el.data('currentTranslateX'))
+        $el.data('touchStartX', 0)
+        $el.data('translateX', $el.intdata('currentTranslateX'))
         return false
     
     $el.bind moveEvent, (e) ->
         e.preventDefault()
         return unless $el.is('.touched')
-        clientX = if e.type == 'touchmove' then e.touches[0].clientX else e.clientX
-        translateX = clientX - $el.data 'touchStartX'
+        clientX = if touchSupport then e.touches[0].clientX else e.clientX
+        translateX = clientX - $el.intdata('touchStartX')
         if translateX > 0
             translateX = 0
         if translateX < -maxTranslateX
             translateX = -maxTranslateX
-        $ul.css('-webkit-transform', "translateX(#{translateX}px)")
+        $ul[0].style[Modernizr.prefixed('transform')] = "translateX(#{translateX}px)"
         $el.data('currentTranslateX', translateX)
         return false
