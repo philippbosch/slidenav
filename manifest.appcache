@@ -5,6 +5,7 @@ CACHE:
 stylesheets/app.css
 javascripts/app.js
 javascripts/lib/add2home.min.js
+javascripts/lib/modernizr.min.js
 javascripts/lib/zepto.min.js
 images/apple-touch-icon-114x114-precomposed.png
 images/apple-touch-icon-57x57-precomposed.png
@@ -20,4 +21,4 @@ NETWORK:
 http://analytics.pb.io/
 
 
-# 2011-12-17T01:48:44Z
+# 2011-12-17T12:06:28Z

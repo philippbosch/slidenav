@@ -1,4 +1,7 @@
 (function() {
+  $.fn.intdata = function(key) {
+    return parseInt($(this).data(key), 10);
+  };
   $(function() {
     var $el, $ul, endEvent, innerWidth, maxTranslateX, moveEvent, startEvent, touchSupport;
     $el = $('#slidenav');
@@ -10,12 +13,13 @@
     endEvent = touchSupport ? 'touchend touchcancel touchleave' : 'mouseup mouseout';
     moveEvent = touchSupport ? 'touchmove' : 'mousemove';
     $el.data('translateX', 0);
+    $el.data('touchStartX', 0);
     $el.bind(startEvent, function(e) {
       var clientX;
       e.preventDefault();
       $el.addClass('touched');
-      clientX = e.type === 'touchmove' ? e.touches[0].clientX : e.clientX;
-      $el.data('touchStartX', clientX - parseInt($el.data('translateX'), 10));
+      clientX = touchSupport ? e.touches[0].clientX : e.clientX;
+      $el.data('touchStartX', clientX - $el.intdata('translateX'));
       return false;
     });
     $el.bind(endEvent, function(e) {
@@ -24,8 +28,8 @@
         return;
       }
       $el.removeClass('touched');
-      $el.data('touchStartX', null);
-      $el.data('translateX', $el.data('currentTranslateX'));
+      $el.data('touchStartX', 0);
+      $el.data('translateX', $el.intdata('currentTranslateX'));
       return false;
     });
     return $el.bind(moveEvent, function(e) {
@@ -34,15 +38,15 @@
       if (!$el.is('.touched')) {
         return;
       }
-      clientX = e.type === 'touchmove' ? e.touches[0].clientX : e.clientX;
-      translateX = clientX - $el.data('touchStartX');
+      clientX = touchSupport ? e.touches[0].clientX : e.clientX;
+      translateX = clientX - $el.intdata('touchStartX');
       if (translateX > 0) {
         translateX = 0;
       }
       if (translateX < -maxTranslateX) {
         translateX = -maxTranslateX;
       }
-      $ul.css('-webkit-transform', "translateX(" + translateX + "px)");
+      $ul[0].style[Modernizr.prefixed('transform')] = "translateX(" + translateX + "px)";
       $el.data('currentTranslateX', translateX);
       return false;
     });
