@@ -11,7 +11,7 @@
     $el.bind(startEvent, function(e) {
       e.preventDefault();
       $el.addClass('touched');
-      $el.data('touchStartX', e.touches[0].clientX);
+      $el.data('touchStartX', e.touches[0].clientX - parseInt($el.data('translateX'), 10));
       return false;
     });
     $el.bind(endEvent, function(e) {
@@ -21,6 +21,7 @@
       }
       $el.removeClass('touched');
       $el.data('touchStartX', null);
+      $el.data('translateX', $el.data('currentTranslateX'));
       return false;
     });
     return $el.bind(moveEvent, function(e) {
@@ -33,7 +34,7 @@
       translateX = diff;
       console.log(diff, translateX);
       $ul.css('-webkit-transform', "translateX(" + translateX + "px)");
-      $el.data('translateX', translateX);
+      $el.data('currentTranslateX', translateX);
       return false;
     });
   });
