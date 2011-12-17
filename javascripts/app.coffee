@@ -11,17 +11,20 @@ $ ->
     log(if touchSupport then 'touch support' else 'no touch support')
     
     nav.bind startEvent, (e) ->
+        e.preventDefault()
         nav.addClass 'touched'
         log e.type
         return false
     
     nav.bind endEvent, (e) ->
+        e.preventDefault()
         return unless nav.is('.touched')
         nav.removeClass 'touched'
         log e.type
         return false
     
     nav.bind moveEvent, (e) ->
+        e.preventDefault()
         return unless nav.is('.touched')
         log e.type
         return false
