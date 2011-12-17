@@ -11,11 +11,13 @@
     };
     log(touchSupport ? 'touch support' : 'no touch support');
     nav.bind(startEvent, function(e) {
+      e.preventDefault();
       nav.addClass('touched');
       log(e.type);
       return false;
     });
     nav.bind(endEvent, function(e) {
+      e.preventDefault();
       if (!nav.is('.touched')) {
         return;
       }
@@ -24,6 +26,7 @@
       return false;
     });
     return nav.bind(moveEvent, function(e) {
+      e.preventDefault();
       if (!nav.is('.touched')) {
         return;
       }
