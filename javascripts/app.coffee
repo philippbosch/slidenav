@@ -13,7 +13,8 @@ $ ->
     $el.bind startEvent, (e) ->
         e.preventDefault()
         $el.addClass('touched')
-        $el.data('touchStartX', e.touches[0].clientX - parseInt($el.data('translateX'),10))
+        clientX = if e.type == 'touchmove' then e.touches[0].clientX else e.clientX
+        $el.data('touchStartX', clientX - parseInt($el.data('translateX'),10))
         return false
     
     $el.bind endEvent, (e) ->
@@ -27,7 +28,8 @@ $ ->
     $el.bind moveEvent, (e) ->
         e.preventDefault()
         return unless $el.is('.touched')
-        translateX = e.touches[0].clientX - $el.data 'touchStartX'
+        clientX = if e.type == 'touchmove' then e.touches[0].clientX else e.clientX
+        translateX = clientX - $el.data 'touchStartX'
         if translateX > 0
             translateX = 0
         if translateX < -maxTranslateX
