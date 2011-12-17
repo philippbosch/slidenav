@@ -11,7 +11,7 @@ $ ->
     $el.bind startEvent, (e) ->
         e.preventDefault()
         $el.addClass 'touched'
-        $el.data 'touchStartX', e.touches[0].clientX
+        $el.data 'touchStartX', e.touches[0].clientX - parseInt($el.data('translateX'),10)
         return false
     
     $el.bind endEvent, (e) ->
@@ -19,6 +19,7 @@ $ ->
         return unless $el.is('.touched')
         $el.removeClass 'touched'
         $el.data 'touchStartX', null
+        $el.data 'translateX', $el.data('currentTranslateX')
         return false
     
     $el.bind moveEvent, (e) ->
@@ -28,5 +29,5 @@ $ ->
         translateX = diff
         console.log diff, translateX
         $ul.css('-webkit-transform', "translateX(#{translateX}px)")
-        $el.data 'translateX', translateX
+        $el.data 'currentTranslateX', translateX
         return false
