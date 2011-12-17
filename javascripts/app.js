@@ -8,10 +8,11 @@
   $(function() {
     var endEvent, log, moveEvent, nav, startEvent, touchSupport;
     nav = $('#slidenav');
-    touchSupport = (__indexOf.call(window, 'ontouchstart') >= 0) || window.DocumentTouch && document instanceof DocumentTouch;
+    touchSupport = !!((__indexOf.call(window, 'ontouchstart') >= 0) || window.DocumentTouch && document instanceof DocumentTouch);
     startEvent = touchSupport ? 'touchstart' : 'mousedown';
     endEvent = touchSupport ? 'touchend touchcancel touchleave' : 'mouseup mouseout';
     moveEvent = touchSupport ? 'touchmove' : 'mousemove';
+    alert(touchSupport);
     log = function(msg) {
       return $('#log').prepend("<li>" + msg + "</li>");
     };
