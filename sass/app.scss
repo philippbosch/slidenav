@@ -10,9 +10,9 @@ body {
     height: 100%;
     overflow: hidden;
     font-family: "Helvetica Neue", serif;
-/*    -webkit-user-select: none;
+    -webkit-user-select: none;
     -moz-user-select: none;
-*/    
+    
     @if $debug {
         #reloader {
             position: fixed;
